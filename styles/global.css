@@ -10,8 +10,8 @@
    VARIABLES GLOBALES DE COLOR
    ---------------------------------------------------------- */
 :root {
-  --asis-bg-contenedor: #d5f1fd;
-  --asis-bg-input: #f0f6ff;
+  --asis-bg-contenedor: #ffffff;
+  --asis-bg-input: #ffffff;
   --asis-principal: #2665ad;
   --asis-enlace: #016ead;
   --asis-hover: #41B3BF;
@@ -28,6 +28,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+body{
+    background:#eceeee85;
+    color:var(--text);
+    font-family:'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
 }
 
 /* ----------------------------------------------------------

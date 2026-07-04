@@ -12,7 +12,7 @@ body {
   min-height: 100vh;
   position: relative;
   color: var(--asis-texto);
-  background-color: #f7fafc;
+  background-color: #e4e5e673;
 }
 
 body::before {
@@ -33,7 +33,7 @@ body::before {
   margin-top: 80px;
   background-color: var(--asis-bg-contenedor);
   border-radius: 25px;
-  border: 1px solid var(--asis-blanco);
+  border: 1px solid rgb(17, 73, 226);
   padding: 35px 30px;
   display: flex;
   flex-direction: column;
