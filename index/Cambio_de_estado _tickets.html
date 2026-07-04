@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambio de Estado - ASIS</title>
+    <link rel="stylesheet" href="/styles/Cambio_de_estado _tickets.css">
+</head>
+<body>
+
+<!-- Barra superior -->
+<div class="barraSuperior">
+
+    <div class="barraSuperiorIzq">
+
+        <button class="volver" type="button" onclick="window.history.back()">
+            ← Volver
+        </button>
+
+        <img src="/IMG/Imagen1.jpg" alt="Logo ASIS" class="logo">
+
+        <div class="tituloApp">
+            ASIS
+            <span>Gestión y trazabilidad de tickets · CGMLTI</span>
+        </div>
+
+    </div>
+
+    <div class="barraSuperiorDer">
+
+        <span class="etiquetaRol">
+            Rol: Técnico de mesa de ayuda
+        </span>
+
+        <div class="avatar">
+            JR
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Tarjeta principal -->
+<div class="ticket">
+
+    <h2>Ticket #001</h2>
+
+    <!-- Información general del ticket -->
+    <div class="informacionTicket">
+
+        <div class="dato">
+            <strong>Activo</strong>
+            <p>Computador HP ProDesk 400</p>
+        </div>
+
+        <div class="dato">
+            <strong>Ubicación</strong>
+            <p>Ambiente 305</p>
+        </div>
+
+        <div class="dato">
+            <strong>Instructor</strong>
+            <p>Carlos Gómez</p>
+        </div>
+
+        <div class="dato">
+            <strong>Fecha de reporte</strong>
+            <p>02/07/2026</p>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- Estado actual -->
+    <p><strong>Estado actual:</strong> Pendiente</p>
+    
+    <!-- Seguimiento del ticket -->
+    <h3>Seguimiento del ticket</h3>
+
+    <div class="progreso">
+
+        <div class="paso activo">
+            <span>🔴</span>
+            <p>Pendiente</p>
+        </div>
+
+        <div>➜</div>
+
+        <div class="paso">
+            <span>🟠</span>
+            <p>En reparación</p>
+        </div>
+
+        <div>➜</div>
+
+        <div class="paso">
+            <span>🟡</span>
+            <p>Reparado</p>
+        </div>
+
+        <div>➜</div>
+
+        <div class="paso">
+            <span>🟢</span>
+            <p>Entregado</p>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- Cambio del estado -->
+    <label for="estado">Nuevo estado</label>
+
+    <select id="estado">
+        <option>Pendiente</option>
+        <option>En reparación</option>
+        <option>Reparado</option>
+        <option>Entregado</option>
+        <option>Sin reparación</option>
+        <option>Inactivar ticket</option>
+    </select>
+
+    <!-- Observación del técnico -->
+    <label for="observacion">Observación</label>
+
+    <textarea
+        id="observacion"
+        rows="4"
+        placeholder="Ingrese una observación sobre el cambio de estado...">
+    </textarea>
+
+    <!-- Botón -->
+    <button id="guardarCambio" type="button">
+        Guardar cambio
+    </button>
+
+    <!-- Alerta -->
+    <div id="alerta" class="alerta">
+        <h3>✔ Cambio realizado correctamente</h3>
+        <p>Notificación enviada correctamente.</p>
+    </div>
+
+    <!-- Información adicional -->
+    <div class="infoSistema">
+        <strong>Información</strong>
+        <p>
+            Cada cambio de estado queda registrado en el historial del ticket y
+            se notifica automáticamente al instructor y al cuentadante.
+        </p>
+    </div>
+
+</div>
+
+<!-- Script -->
+<script>
+
+const boton = document.getElementById("guardarCambio");
+const alerta = document.getElementById("alerta");
+
+boton.addEventListener("click", function(){
+
+    alerta.style.display = "block";
+
+    setTimeout(function(){
+        alerta.style.display = "none";
+    },4000);
+
+});
+
+</script>
+
+</body>
+</html>
