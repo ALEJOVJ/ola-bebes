@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASIS-Consultar Tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/frontend/styles/ticketsGlobal.css">
+<link rel="stylesheet" href="/frontend/styles/Consultar_t.css">
+</head>
+<body>
+    <div class="barraSuperior">
+        <div class="barraSuperiorIzq">
+            <button class="volver" type="button" onclick="window.history.back()">&larr; Volver</button>
+            <img src="/frontend/IMG/Imagen1.jpg" alt="Logo ASIS" class="logo">
+            <div class="tituloApp">ASIS
+                <span>Gestión y trazabilidad de tickets · CGMLTI</span>
+            </div>
+        </div>
+        <div class="barraSuperiorDer">
+            <span class="etiquetaRol">Rol: Técnico de mesa de ayuda</span>
+            <div class="avatar">JR</div>
+        </div>
+    </div>
+    
+    <div class="diseno">
+    
+    <!-- FILTROS -->
+    <aside class="filtros">
+        <h3>Estado del ticket</h3>
+        <ul class="listaEstados" id="statusList">
+        <li class="itemEstado activo" data-status="todos"><span class="punto" style="background:#B9C0CA"></span>Todos<span class="contador" id="count-todos"></span></li>
+        <li class="itemEstado" data-status="pendiente"><span class="punto" style="background:var(--rojo)"></span>Pendiente<span class="contador" id="count-pendiente"></span></li>
+        <li class="itemEstado" data-status="reparacion"><span class="punto" style="background:var(--naranja)"></span>En reparación<span class="contador" id="count-reparacion"></span></li>
+        <li class="itemEstado" data-status="reparado"><span class="punto" style="background:var(--amarillo)"></span>Reparado<span class="contador" id="count-reparado"></span></li>
+        <li class="itemEstado" data-status="entregado"><span class="punto" style="background:var(--verde)"></span>Entregado<span class="contador" id="count-entregado"></span></li>
+        <li class="itemEstado" data-status="sinreparo"><span class="punto" style="background:var(--negro)"></span>Sin reparación<span class="contador" id="count-sinreparo"></span></li>
+        <li class="itemEstado" data-status="inactivo"><span class="punto" style="background:var(--morado)"></span>Inactivado<span class="contador" id="count-inactivo"></span></li>
+        </ul>
+    
+        <div class="leyenda">
+        <h3>Convención de color</h3>
+        <div class="filaLeyenda"><span class="punto" style="background:var(--rojo)"></span>Rojo — pendiente</div>
+        <div class="filaLeyenda"><span class="punto" style="background:var(--naranja)"></span>Naranja — en reparación</div>
+        <div class="filaLeyenda"><span class="punto" style="background:var(--amarillo)"></span>Amarillo — reparado</div>
+        <div class="filaLeyenda"><span class="punto" style="background:var(--verde)"></span>Verde — entregado</div>
+        <div class="filaLeyenda"><span class="punto" style="background:var(--negro)"></span>Negro — sin reparación</div>
+        <div class="filaLeyenda"><span class="punto" style="background:var(--morado)"></span>Morado — inactivado</div>
+        </div>
+    </aside>
+    
+    <!-- MAIN -->
+    <main class="contenidoPrincipal">
+        <div class="encabezadoPagina">
+        <h1>Consultar tickets</h1>
+        <p>Datos de ejemplo (ficticios) para maquetar la consulta de tickets de daños en equipos y mobiliario.</p>
+        </div>
+    
+        <div class="barraHerramientas">
+        <div class="cajaBusqueda">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Buscar por ID, activo, ubicación o instructor…">
+        </div>
+        <select id="tipoActivoSelect">
+            <option value="todos">Tipo de activo: todos</option>
+            <option value="Equipo">Equipo tecnológico</option>
+            <option value="Mobiliario">Mobiliario</option>
+        </select>
+        <select id="fechaSelect">
+            <option value="todos">Fecha: todas</option>
+            <option value="7">Últimos 7 días</option>
+            <option value="30">Últimos 30 días</option>
+        </select>
+        <select id="ordenSelect">
+            <option value="reciente">Ordenar: más reciente</option>
+            <option value="antiguo">Ordenar: más antiguo</option>
+        </select>
+        </div>
+    
+        <p class="contadorResultados" id="resultCount"></p>
+    
+        <div class="listaTickets" id="ticketList"></div>
+    
+        <div class="estadoVacio" id="emptyState" style="display:none;">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <strong>No se encontraron tickets</strong>
+        Ajusta la búsqueda o los filtros para ver más resultados.
+        </div>
+    </main>
+    </div>
+    
+    <!-- PANEL DETALLE -->
+    <div class="superposicion" id="overlay"></div>
+    <div class="panelDetalle" id="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+    <div class="encabezadoPanel">
+        <div>
+        <h2 id="panelTitle">—</h2>
+        <div class="subtitulo" id="panelSub">—</div>
+        </div>
+        <button class="botonCerrar" id="closePanel" aria-label="Cerrar detalle">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+    </div>
+    <div class="cuerpoPanel" id="panelBody">
+        <!-- contenido inyectado por JS -->
+    </div>
+    </div>
+    
+    <script>
+    /* ---------------- Datos ficticios ---------------- */
+    const STATUS_META = {
+    pendiente:  { label:'Pendiente',        color:'var(--rojo)'    },
+    reparacion: { label:'En reparación',    color:'var(--naranja)' },
+    reparado:   { label:'Reparado',         color:'var(--amarillo)'},
+    entregado:  { label:'Entregado',        color:'var(--verde)'   },
+    sinreparo:  { label:'Sin reparación',   color:'var(--negro)'   },
+    inactivo:   { label:'Inactivado',       color:'var(--morado)'  },
+    };
+    
+    const tickets = [
+    { id:'TCK-2026-0041', tipoActivo:'Equipo', activo:'Computador de escritorio', marca:'HP EliteDesk', serie:'HP-88213X', ubicacion:'Ambiente 204 · Bloque C', falla:'No enciende', descripcion:'El equipo no enciende luego de un corte de energía; el led del case no responde.', estado:'pendiente', reportadoPor:'Laura Gómez (Instructora)', tecnico:'Sin asignar', fecha:'2026-06-28', actualizado:'2026-06-28' },
+    { id:'TCK-2026-0040', tipoActivo:'Mobiliario', activo:'Silla ergonómica', marca:'—', serie:'—', ubicacion:'Ambiente 310 · Bloque A', falla:'Estructura dañada', descripcion:'Una de las patas de la silla está partida, riesgo de caída para el usuario.', estado:'reparacion', reportadoPor:'Carlos Peña (Instructor)', tecnico:'Andrés Ruiz', fecha:'2026-06-27', actualizado:'2026-06-30' },
+    { id:'TCK-2026-0039', tipoActivo:'Equipo', activo:'Televisor', marca:'Samsung', serie:'SM-TV-77210', ubicacion:'Ambiente 112 · Bloque B', falla:'Pantalla rota', descripcion:'La pantalla presenta una fisura en la esquina inferior derecha tras el traslado.', estado:'reparado', reportadoPor:'Marcela Duarte (Instructora)', tecnico:'Julián Ríos', fecha:'2026-06-24', actualizado:'2026-06-29' },
+    { id:'TCK-2026-0038', tipoActivo:'Equipo', activo:'Computador de escritorio', marca:'Hp', serie:'EP-VB-40982', ubicacion:'Auditorio Principal', falla:'Sin señal de imagen', descripcion:'El videobeam enciende pero no proyecta imagen desde ninguna fuente HDMI.', estado:'entregado', reportadoPor:'Diego Salazar (Instructor)', tecnico:'Julián Ríos', fecha:'2026-06-18', actualizado:'2026-06-25' },
+    { id:'TCK-2026-0037', tipoActivo:'Mobiliario', activo:'Mesa de trabajo', marca:'—', serie:'—', ubicacion:'Taller de Electrónica', falla:'Superficie deteriorada', descripcion:'Laminado levantado por humedad, no representa riesgo pero afecta el uso.', estado:'entregado', reportadoPor:'Paula Restrepo (Instructora)', tecnico:'Andrés Ruiz', fecha:'2026-06-15', actualizado:'2026-06-20' },
+    { id:'TCK-2026-0036', tipoActivo:'Equipo', activo:'Computador de escritorio', marca:'Hp', serie:'EP-IMP-30021', ubicacion:'Coordinación Académica', falla:'Atasco de papel constante', descripcion:'El rodillo de arrastre no toma el papel correctamente en más del 50% de los intentos.', estado:'sinreparo', reportadoPor:'Fernando Ávila (Instructor)', tecnico:'Julián Ríos', fecha:'2026-06-10', actualizado:'2026-06-22' },
+    { id:'TCK-2026-0035', tipoActivo:'Equipo', activo:'Computador portátil', marca:'Lenovo ThinkPad', serie:'LN-TP-11245', ubicacion:'Ambiente 205 · Bloque C', falla:'Batería no carga', descripcion:'El portátil solo enciende conectado directamente, la batería no retiene carga.', estado:'pendiente', reportadoPor:'Laura Gómez (Instructora)', tecnico:'Sin asignar', fecha:'2026-06-29', actualizado:'2026-06-29' },
+    { id:'TCK-2026-0034', tipoActivo:'Mobiliario', activo:'Silla ergonómica', marca:'—', serie:'—', ubicacion:'Almacén General', falla:'Cerradura dañada', descripcion:'La cerradura del segundo cajón no permite el cierre correcto del archivador.', estado:'inactivo', reportadoPor:'Sandra Molina (Cuentadante)', tecnico:'—', fecha:'2026-05-30', actualizado:'2026-06-05' },
+    { id:'TCK-2026-0033', tipoActivo:'Equipo', activo:'Computador de escritorio', marca:'Dell OptiPlex', serie:'DL-OP-77341', ubicacion:'Sala de Sistemas 1', falla:'Falla eléctrica', descripcion:'El equipo se apaga intermitentemente durante la jornada de formación.', estado:'reparacion', reportadoPor:'Diego Salazar (Instructor)', tecnico:'Andrés Ruiz', fecha:'2026-06-26', actualizado:'2026-06-30' },
+    { id:'TCK-2026-0032', tipoActivo:'Equipo', activo:'Computador de escritorio', marca:'TP-Link', serie:'TP-RT-50291', ubicacion:'Ambiente 108 · Bloque B', falla:'Sin conexión a red', descripcion:'El equipo no distribuye señal Wi-Fi a los puestos de trabajo del ambiente.', estado:'reparado', reportadoPor:'Marcela Duarte (Instructora)', tecnico:'Julián Ríos', fecha:'2026-06-20', actualizado:'2026-06-27' },
+    { id:'TCK-2026-0031', tipoActivo:'Mobiliario', activo:'Silla ergonómica', marca:'—', serie:'—', ubicacion:'Ambiente 204 · Bloque C', falla:'Espaldar suelto', descripcion:'El espaldar se desprende del mecanismo de inclinación al recostarse.', estado:'entregado', reportadoPor:'Carlos Peña (Instructor)', tecnico:'Andrés Ruiz', fecha:'2026-06-12', actualizado:'2026-06-19' },
+    { id:'TCK-2026-0030', tipoActivo:'Equipo', activo:'Computador de escritorio', marca:'HP EliteDesk', serie:'HP-88090T', ubicacion:'Sala de Sistemas 2', falla:'Sobrecalentamiento', descripcion:'El equipo se apaga solo tras aproximadamente 40 minutos de uso continuo.', estado:'pendiente', reportadoPor:'Fernando Ávila (Instructor)', tecnico:'Sin asignar', fecha:'2026-06-30', actualizado:'2026-06-30' },
+    ];
+    
+    /* ---------------- Estado de la UI ---------------- */
+    let activeStatus = 'todos';
+    let searchTerm = '';
+    let tipoActivoFiltro = 'todos';
+    let fechaFiltro = 'todos';
+    let orden = 'reciente';
+    
+    const listEl = document.getElementById('ticketList');
+    const emptyEl = document.getElementById('emptyState');
+    const countEl = document.getElementById('resultCount');
+    
+    function daysAgo(dateStr){
+    const today = new Date('2026-07-02');
+    const d = new Date(dateStr);
+    return Math.round((today - d) / (1000*60*60*24));
+    }
+    
+    function updateStatusCounts(){
+    document.getElementById('count-todos').textContent = tickets.length;
+    Object.keys(STATUS_META).forEach(key=>{
+        const c = tickets.filter(t=>t.estado===key).length;
+        const el = document.getElementById('count-'+key);
+        if(el) el.textContent = c;
+    });
+    }
+    
+    function applyFilters(){
+    let result = tickets.filter(t=>{
+        if(activeStatus !== 'todos' && t.estado !== activeStatus) return false;
+        if(tipoActivoFiltro !== 'todos' && t.tipoActivo !== tipoActivoFiltro) return false;
+        if(fechaFiltro !== 'todos' && daysAgo(t.fecha) > parseInt(fechaFiltro)) return false;
+        if(searchTerm){
+        const haystack = (t.id + ' ' + t.activo + ' ' + t.ubicacion + ' ' + t.reportadoPor).toLowerCase();
+        if(!haystack.includes(searchTerm.toLowerCase())) return false;
+        }
+        return true;
+    });
+    
+    result.sort((a,b)=>{
+        const da = new Date(a.fecha), db = new Date(b.fecha);
+        return orden === 'reciente' ? db - da : da - db;
+    });
+    
+    renderList(result);
+    }
+    
+    function renderList(items){
+    countEl.textContent = items.length + (items.length === 1 ? ' ticket encontrado' : ' tickets encontrados');
+    listEl.innerHTML = '';
+    
+    if(items.length === 0){
+        emptyEl.style.display = 'block';
+        return;
+    }
+    emptyEl.style.display = 'none';
+    
+    items.forEach(t=>{
+        const meta = STATUS_META[t.estado];
+        const card = document.createElement('div');
+        card.className = 'tarjetaTicket';
+        card.tabIndex = 0;
+        card.innerHTML = `
+        <div class="barraEstado" style="background:${meta.color}"></div>
+        <div class="cuerpoTicket">
+            <div class="idTicket monoespaciado">${t.id}</div>
+            <div class="infoTicket">
+            <div class="nombreActivo"><span class="etiquetaColumna"></span>${t.activo}</div>
+            <div class="descripcionCorta">${t.falla}</div>
+            </div>
+            <div class="ubicacionTicket"><span class="etiquetaColumna"></span>${t.ubicacion}</div>
+            <div class="personasTicket">
+            <span class="etiquetaColumna"></span><b>Reporta:</b> ${t.reportadoPor}<br>
+            <b>Técnico:</b> ${t.tecnico}
+            </div>
+            <div class="insignia" style="background:${meta.color}22; color:${meta.color}">
+            <span class="punto" style="background:${meta.color}"></span>${meta.label}
+            </div>
+            <div class="fechaTicket">${formatDate(t.fecha)}</div>
+        </div>
+        `;
+        card.addEventListener('click', ()=>openDetail(t));
+        card.addEventListener('keypress', e=>{ if(e.key==='Enter') openDetail(t); });
+        listEl.appendChild(card);
+    });
+    }
+    
+    function formatDate(iso){
+    const meses = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    const d = new Date(iso);
+    return `${d.getDate()} ${meses[d.getMonth()]} ${d.getFullYear()}`;
+    }
+    
+    /* ---------------- Panel de detalle ---------------- */
+    const overlay = document.getElementById('overlay');
+    const panel = document.getElementById('panel');
+    
+    function openDetail(t){
+    const meta = STATUS_META[t.estado];
+    document.getElementById('panelTitle').textContent = t.activo;
+    document.getElementById('panelSub').innerHTML = `<span class="monoespaciado">${t.id}</span> · ${t.tipoActivo}`;
+    
+    const historial = buildHistorial(t);
+    
+    document.getElementById('panelBody').innerHTML = `
+        <div class="estadoPanel">
+        <div class="insignia" style="background:${meta.color}22; color:${meta.color}">
+            <span class="punto" style="background:${meta.color}"></span>${meta.label}
+        </div>
+        </div>
+    
+        <div class="cuadriculaCampos">
+        <div class="campo"><label>Tipo de activo</label><div>${t.tipoActivo}</div></div>
+        <div class="campo"><label>Marca</label><div>${t.marca}</div></div>
+        <div class="campo"><label>N.º de serie</label><div>${t.serie}</div></div>
+        <div class="campo"><label>Tipo de falla</label><div>${t.falla}</div></div>
+        <div class="campo"><label>Ubicación</label><div>${t.ubicacion}</div></div>
+        <div class="campo"><label>Fecha de reporte</label><div>${formatDate(t.fecha)}</div></div>
+        <div class="campo"><label>Reportado por</label><div>${t.reportadoPor}</div></div>
+        <div class="campo"><label>Técnico asignado</label><div>${t.tecnico}</div></div>
+        </div>
+    
+        <div class="cuadriculaCampos completa">
+        <div class="campo"><label>Descripción del daño</label><div>${t.descripcion}</div></div>
+        </div>
+    
+        <div class="tituloSeccion">Historial de estados</div>
+        <div class="lineaTiempo">
+        ${historial.map(h => `
+            <div class="itemTiempo">
+            <span class="puntoTiempo" style="background:${h.color}"></span>
+            <div class="textoTiempo">${h.text}<span class="fechaEvento">${h.when}</span></div>
+            </div>
+        `).join('')}
+        </div>
+    `;
+    
+    overlay.classList.add('visible');
+    panel.classList.add('visible');
+    }
+    
+    function buildHistorial(t){
+    const base = [{ text:'Ticket registrado por ' + t.reportadoPor, color:'var(--rojo)', when:formatDate(t.fecha) }];
+    const orderSeq = ['pendiente','reparacion','reparado','entregado'];
+    const idx = orderSeq.indexOf(t.estado);
+    
+    if(t.estado === 'sinreparo'){
+        base.push({ text:'Diagnóstico técnico: no es posible reparar el activo', color:'var(--negro)', when:formatDate(t.actualizado) });
+    } else if(t.estado === 'inactivo'){
+        base.push({ text:'Ticket inactivado por el técnico', color:'var(--morado)', when:formatDate(t.actualizado) });
+    } else if(idx > 0){
+        for(let i=1; i<=idx; i++){
+        base.push({ text:'Cambio de estado a "' + STATUS_META[orderSeq[i]].label + '"', color:STATUS_META[orderSeq[i]].color, when: i===idx ? formatDate(t.actualizado) : formatDate(t.fecha) });
+        }
+    }
+    return base;
+    }
+    
+    function closeDetail(){
+    overlay.classList.remove('visible');
+    panel.classList.remove('visible');
+    }
+    document.getElementById('closePanel').addEventListener('click', closeDetail);
+    overlay.addEventListener('click', closeDetail);
+    document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeDetail(); });
+    
+    /* ---------------- Listeners de filtros ---------------- */
+    document.getElementById('statusList').addEventListener('click', e=>{
+    const item = e.target.closest('.itemEstado');
+    if(!item) return;
+    document.querySelectorAll('.itemEstado').forEach(el=>el.classList.remove('activo'));
+    item.classList.add('activo');
+    activeStatus = item.dataset.status;
+    applyFilters();
+    });
+    
+    document.getElementById('searchInput').addEventListener('input', e=>{
+    searchTerm = e.target.value;
+    applyFilters();
+    });
+    document.getElementById('tipoActivoSelect').addEventListener('change', e=>{
+    tipoActivoFiltro = e.target.value;
+    applyFilters();
+    });
+    document.getElementById('fechaSelect').addEventListener('change', e=>{
+    fechaFiltro = e.target.value;
+    applyFilters();
+    });
+    document.getElementById('ordenSelect').addEventListener('change', e=>{
+    orden = e.target.value;
+    applyFilters();
+    });
+    
+    /* ---------------- Init ---------------- */
+    updateStatusCounts();
+    applyFilters();
+    </script>
+    </body>
+</html>
