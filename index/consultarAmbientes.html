@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASIS - Gestión de Ambientes</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="/styles/ticketsGlobal.css">
+    <link rel="stylesheet" href="/styles/ambientes.css">
+</head>
+
+<body>
+
+<!-- ======================= BARRA SUPERIOR ======================= -->
+
+<header class="barraSuperior">
+
+    <div class="barraSuperiorIzq">
+
+        <button class="volver" onclick="history.back()">
+            ← Volver
+        </button>
+
+        <img src="/IMG/Imagen1.jpg"
+             class="logo"
+             alt="Logo">
+
+        <div class="tituloApp">
+
+            ASIS
+
+            <span>
+                Gestión de Ambientes de Formación
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="barraSuperiorDer">
+
+        <span class="etiquetaRol">
+            Rol: Administrador
+        </span>
+
+        <div class="avatar">
+            AF
+        </div>
+
+    </div>
+
+</header>
+
+<!-- ======================= CONTENIDO ======================= -->
+
+<div class="diseno">
+
+    <!-- ======================= FILTROS ======================= -->
+
+    <aside class="filtros">
+
+        <h3>
+            Estado del ambiente
+        </h3>
+
+        <ul class="listaEstados">
+
+            <li class="itemEstado activo">
+
+                <span class="punto gris"></span>
+
+                Todos
+
+                <span class="contador">
+                    30
+                </span>
+
+            </li>
+
+            <li class="itemEstado">
+
+                <span class="punto verde"></span>
+
+                Disponible
+
+                <span class="contador">
+                    18
+                </span>
+
+            </li>
+
+            <li class="itemEstado">
+
+                <span class="punto azul"></span>
+
+                Ocupado
+
+                <span class="contador">
+                    7
+                </span>
+
+            </li>
+
+            <li class="itemEstado">
+
+                <span class="punto naranja"></span>
+
+                Mantenimiento
+
+                <span class="contador">
+                    4
+                </span>
+
+            </li>
+
+            <li class="itemEstado">
+
+                <span class="punto negro"></span>
+
+                Inactivo
+
+                <span class="contador">
+                    1
+                </span>
+
+            </li>
+
+        </ul>
+
+        <div class="leyenda">
+
+            <h3>
+                Convención
+            </h3>
+
+            <div class="filaLeyenda">
+
+                <span class="punto verde"></span>
+
+                Disponible
+
+            </div>
+
+            <div class="filaLeyenda">
+
+                <span class="punto azul"></span>
+
+                Ocupado
+
+            </div>
+
+            <div class="filaLeyenda">
+
+                <span class="punto naranja"></span>
+
+                Mantenimiento
+
+            </div>
+
+            <div class="filaLeyenda">
+
+                <span class="punto negro"></span>
+
+                Inactivo
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- ======================= CONTENIDO PRINCIPAL ======================= -->
+
+    <main class="contenidoPrincipal">
+
+        <div class="encabezadoPagina">
+
+            <h1>
+                Gestión de Ambientes
+            </h1>
+
+            <p>
+
+                Administre los ambientes de formación registrados
+                dentro de la institución.
+
+            </p>
+
+        </div>
+
+        <!-- ======================= HERRAMIENTAS ======================= -->
+
+        <div class="barraHerramientas">
+
+            <div class="cajaBusqueda">
+
+                <svg width="16"
+                     height="16"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="2"
+                     viewBox="0 0 24 24">
+
+                    <circle cx="11"
+                            cy="11"
+                            r="7"></circle>
+
+                    <line x1="21"
+                          y1="21"
+                          x2="16.65"
+                          y2="16.65"></line>
+
+                </svg>
+
+                <input
+                    type="text"
+                    placeholder="Buscar por código, nombre o bloque...">
+
+            </div>
+
+            <select>
+
+                <option>
+                    Tipo de ambiente
+                </option>
+
+                <option>
+                    Sala de Sistemas
+                </option>
+
+                <option>
+                    Laboratorio
+                </option>
+
+                <option>
+                    Aula
+                </option>
+
+                <option>
+                    Taller
+                </option>
+
+            </select>
+
+            <select>
+
+                <option>
+                    Bloque
+                </option>
+
+                <option>A</option>
+
+                <option>B</option>
+
+                <option>C</option>
+
+            </select>
+
+            <select>
+
+                <option>
+                    Ordenar
+                </option>
+
+                <option>
+                    Más reciente
+                </option>
+
+                <option>
+                    Más antiguo
+                </option>
+
+            </select>
+
+            <button class="btnRegistrar">
+
+                + Registrar Ambiente
+
+            </button>
+
+        </div>
+
+        <p class="contadorResultados">
+
+            30 ambientes encontrados
+
+        </p>
+
+        <!-- ======================= TARJETAS ======================= -->
+
+        <div class="listaAmbientes">
+
+            <div class="tarjetaAmbiente">
+
+                <div class="barraEstado verde"></div>
+
+                <div class="cuerpoAmbiente">
+
+                    <div class="codigoAmbiente">
+
+                        AMB-204
+
+                    </div>
+
+                    <div class="infoAmbiente">
+
+                        <div class="nombreAmbiente">
+
+                            Sala de Sistemas 204
+
+                        </div>
+
+                        <div class="descripcionAmbiente">
+
+                            Ambiente equipado con computadores
+                            para formación ADSO.
+
+                        </div>
+
+                    </div>
+
+                    <div class="ubicacionAmbiente">
+
+                        Bloque C
+
+                    </div>
+
+                    <div class="capacidadAmbiente">
+
+                        Capacidad
+
+                        <br>
+
+                        <b>35 Aprendices</b>
+
+                    </div>
+
+                    <div class="estadoDisponible">
+
+                        Disponible
+
+                    </div>
+
+                    <div class="acciones">
+
+                        <button class="editar">
+
+                            Editar
+
+                        </button>
+
+                        <button class="eliminar">
+
+                            Eliminar
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- ======================= PANEL LATERAL ======================= -->
+
+<div class="superposicion"></div>
+
+<div class="panelDetalle">
+
+    <div class="encabezadoPanel">
+
+        <div>
+
+            <h2>
+
+                Registrar Ambiente
+
+            </h2>
+
+            <div class="subtitulo">
+
+                Complete la información del ambiente.
+
+            </div>
+
+        </div>
+
+        <button class="botonCerrar">
+
+            ✕
+
+        </button>
+
+    </div>
+
+    <div class="cuerpoPanel">
+
+        <form class="formularioAmbiente">
+            <!-- FILA 1 -->
+
+<div class="grupoFormulario">
+
+    <label for="codigo">
+        Código *
+    </label>
+
+    <input
+        type="text"
+        id="codigo"
+        placeholder="Ej. AMB-204">
+
+</div>
+
+<div class="grupoFormulario">
+
+    <label for="nombre">
+        Nombre del ambiente *
+    </label>
+
+    <input
+        type="text"
+        id="nombre"
+        placeholder="Sala de Sistemas 204">
+
+</div>
+
+<!-- FILA 2 -->
+
+<div class="filaFormulario">
+
+    <div class="grupoFormulario">
+
+        <label>
+            Bloque *
+        </label>
+
+        <select>
+
+            <option>Seleccione</option>
+
+            <option>Bloque A</option>
+
+            <option>Bloque B</option>
+
+            <option>Bloque C</option>
+
+        </select>
+
+    </div>
+
+    <div class="grupoFormulario">
+
+        <label>
+            Piso
+        </label>
+
+        <input
+            type="number"
+            placeholder="2">
+
+    </div>
+
+</div>
+
+<!-- FILA 3 -->
+
+<div class="filaFormulario">
+
+    <div class="grupoFormulario">
+
+        <label>
+            Tipo de ambiente *
+        </label>
+
+        <select>
+
+            <option>Seleccione</option>
+
+            <option>Sala de Sistemas</option>
+
+            <option>Laboratorio</option>
+
+            <option>Taller</option>
+
+            <option>Aula</option>
+
+            <option>Auditorio</option>
+
+        </select>
+
+    </div>
+
+    <div class="grupoFormulario">
+
+        <label>
+            Estado *
+        </label>
+
+        <select>
+
+            <option>Disponible</option>
+
+            <option>Ocupado</option>
+
+            <option>Mantenimiento</option>
+
+            <option>Inactivo</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<!-- FILA 4 -->
+
+<div class="filaFormulario">
+
+    <div class="grupoFormulario">
+
+        <label>
+            Capacidad
+        </label>
+
+        <input
+            type="number"
+            placeholder="35">
+
+    </div>
+
+    <div class="grupoFormulario">
+
+        <label>
+            Computadores
+        </label>
+
+        <input
+            type="number"
+            placeholder="30">
+
+    </div>
+
+</div>
+
+<!-- FILA 5 -->
+
+<div class="filaFormulario">
+
+    <div class="grupoFormulario">
+
+        <label>
+            VideoBeam
+        </label>
+
+        <input
+            type="number"
+            placeholder="1">
+
+    </div>
+
+    <div class="grupoFormulario">
+
+        <label>
+            Aire acondicionado
+        </label>
+
+        <select>
+
+            <option>Sí</option>
+
+            <option>No</option>
+
+        </select>
+
+    </div>
+
+</div>
+
+<!-- FILA 6 -->
+
+<div class="grupoFormulario">
+
+    <label>
+        Instructor encargado
+    </label>
+
+    <input
+        type="text"
+        placeholder="Nombre del instructor">
+
+</div>
+
+<!-- FILA 7 -->
+
+<div class="grupoFormulario">
+
+    <label>
+        Descripción
+    </label>
+
+    <textarea
+        rows="5"
+        placeholder="Descripción del ambiente..."></textarea>
+
+</div>
+
+<!-- BOTONES -->
+
+<div class="botonesFormulario">
+
+    <button
+        type="button"
+        class="btnCancelar">
+
+        Cancelar
+
+    </button>
+
+    <button
+        type="submit"
+        class="btnGuardar">
+
+        Guardar Ambiente
+
+    </button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- MODAL ELIMINAR -->
+
+<div class="modalEliminar">
+
+    <div class="contenidoModal">
+
+        <h2>
+
+            Eliminar ambiente
+
+        </h2>
+
+        <p>
+
+            ¿Está seguro que desea eliminar este ambiente?
+
+        </p>
+
+        <strong>
+
+            AMB-204 - Sala de Sistemas 204
+
+        </strong>
+
+        <div class="botonesModal">
+
+            <button class="btnCancelar">
+
+                Cancelar
+
+            </button>
+
+            <button class="btnEliminar">
+
+                Eliminar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/ambientes.js"></script>
+
+</body>
+
+</html>
