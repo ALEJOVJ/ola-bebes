@@ -1,7 +1,7 @@
 /* ---------- Variables ---------- */
 
 :root{
-    --asis-bg-contenedor:#d5f1fd;
+    --asis-bg-contenedor:#ffffff;
     --asis-bg-input:#f0f6ff;
     --asis-principal:#2665ad;
     --asis-enlace:#016ead;
@@ -53,7 +53,7 @@ body{
 .logo{
     width:55px;
     height:55px;
-    border-radius:50%;
+    border-radius:10px;
     object-fit:cover;
 }
 
@@ -62,7 +62,7 @@ body{
     flex-direction:column;
     font-size:22px;
     font-weight:bold;
-    color:var(--asis-principal);
+    color:black;
 }
 
 .tituloApp span{
